@@ -19,7 +19,7 @@ public class PlayerController {
     private GameService gameService;
 
     @GetMapping("/player")
-    public PlayerOut getPlayer(@RequestParam(value="name") String name) throws PlayerNameException {
+    public PlayerOut getPlayer(@RequestParam(value="name", defaultValue="") String name) throws PlayerNameException {
         return gameService.getPlayerOut(name);
     }
 
