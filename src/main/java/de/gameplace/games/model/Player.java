@@ -1,5 +1,6 @@
 package de.gameplace.games.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
@@ -14,5 +15,5 @@ public class Player {
     List<Integer> points;
     int pointsTotal;
     List<Card> currentCards;
-    
+
 }
