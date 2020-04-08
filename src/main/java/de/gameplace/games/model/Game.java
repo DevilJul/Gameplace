@@ -13,7 +13,8 @@ public class Game {
     int currentRound;
     GamestateEnum gamestate;
     int currentStartPlayerIndex;
-    int currentActionPlayerIndex;
+    //int currentActionPlayerIndex;
+    GameRound gameRound;
 
     public enum GamestateEnum {INIT, BET, PLAY, WAIT, END};
 
