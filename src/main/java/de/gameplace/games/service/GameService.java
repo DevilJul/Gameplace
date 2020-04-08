@@ -3,7 +3,9 @@ package de.gameplace.games.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import de.gameplace.games.exceptions.IllegalPlayActionException;
 import de.gameplace.games.model.Game;
+import de.gameplace.games.model.Player;
 
 @Service
 public class GameService {
@@ -16,11 +18,11 @@ public class GameService {
     }
 
     public boolean isCurrentActionPlayerLast() {
-        return calcIncrementPlayerIndex(game.getCurrentActionPlayerIndex()) == game.getCurrentStartPlayerIndex();
+        return calcIncrementPlayerIndex(game.getGameRound().getCurrentActionPlayerIndex()) == game.getCurrentStartPlayerIndex();
     }
 
     public void incrementCurrentActionPlayer() {
-        game.setCurrentActionPlayerIndex(calcIncrementPlayerIndex(game.getCurrentActionPlayerIndex()));
+        game.getGameRound().setCurrentActionPlayerIndex(calcIncrementPlayerIndex(game.getGameRound().getCurrentActionPlayerIndex()));
     }
 
     public void incrementCurrentStartPlayer() {
@@ -33,5 +35,11 @@ public class GameService {
             currentIndex = 0;
         }
         return currentIndex;
+    }
+
+    public void checkPlayerIsAllowedToPlay(Player player) throws IllegalPlayActionException{
+        if (!game.getPlayers().get(game.getGameRound().getCurrentActionPlayerIndex()).equals(player)) {
+            throw new IllegalPlayActionException();
+        }
     }
 }

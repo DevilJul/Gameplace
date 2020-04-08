@@ -22,14 +22,11 @@ public class GamestateBetService {
 
     public void playBet(Player player, String betString) throws GameException {
 
-        if (!game.getPlayers().get(game.getCurrentActionPlayerIndex()).equals(player)) {
-            throw new IllegalPlayActionException();
-        }
+        gameService.checkPlayerIsAllowedToPlay(player);
 
         placeBet(player, betString);
         
         if (gameService.isCurrentActionPlayerLast()) {
-            gameService.incrementCurrentActionPlayer();
             gamePlayService.proceedToGamestatePlay();
         } else {
             gameService.incrementCurrentActionPlayer();
@@ -61,7 +58,7 @@ public class GamestateBetService {
     }
 
     private int getTotalBets() {
-        return game.getPlayers().stream().mapToInt(p -> p.getBets().get(game.getCurrentRound())).sum();
+        return game.getPlayers().stream().mapToInt(p -> p.getBets().get(game.getCurrentRound() - 1)).sum();
     }
 
 }

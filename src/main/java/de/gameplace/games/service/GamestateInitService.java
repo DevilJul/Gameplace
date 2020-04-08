@@ -51,12 +51,12 @@ public class GamestateInitService {
     public void setPlayerOkay(Player player) {
         player.setCurrentOkayState(true);
 
-        if (canStartNextState()) {
-            gamePlayService.initGamestateBet();
+        if (canStartGame()) {
+            gamePlayService.startGame();
         }
     }
 
-    private boolean canStartNextState() {
+    private boolean canStartGame() {
         return game.getPlayers().size() >= 3 && gameService.allPlayersOkay();
     }
 }
