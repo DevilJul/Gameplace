@@ -1,5 +1,5 @@
 package de.gameplace.games.exceptions;
 
-public class PlayerNameException extends Exception {
+public class PlayerNameException extends GameException {
 
 }
