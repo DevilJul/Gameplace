@@ -11,6 +11,10 @@ public class Game {
     List<Card> cards;
     int numberOfRounds;
     int currentRound;
-    Gamestate gamestate;
+    GamestateEnum gamestate;
+    int currentStartPlayerIndex;
+    int currentActionPlayerIndex;
+
+    public enum GamestateEnum {INIT, BET, PLAY, WAIT, END};
 
 }

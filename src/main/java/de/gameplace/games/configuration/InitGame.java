@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import de.gameplace.games.model.Game;
+import de.gameplace.games.model.Game.GamestateEnum;
 
 @Configuration
 public class InitGame {
@@ -17,6 +18,7 @@ public class InitGame {
         game.setCards(new ArrayList<>());
         game.setNumberOfRounds(10);
         game.setCurrentRound(0);
+        game.setGamestate(GamestateEnum.INIT);
         return game;
     }
 
