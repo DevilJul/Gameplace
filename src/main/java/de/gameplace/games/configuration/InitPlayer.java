@@ -2,7 +2,6 @@ package de.gameplace.games.configuration;
 
 import java.util.ArrayList;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import de.gameplace.games.model.Player;
@@ -20,6 +19,7 @@ public abstract class InitPlayer {
         player.setPoints(new ArrayList<>());
         player.setCurrentCards(new ArrayList<>());
         player.setPointsTotal(0);
+        player.setCurrentOkayState(false);
 
         return player;
     }
