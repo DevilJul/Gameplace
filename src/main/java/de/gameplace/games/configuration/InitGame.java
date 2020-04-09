@@ -3,6 +3,7 @@ package de.gameplace.games.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,19 +15,24 @@ import de.gameplace.games.model.Game.GamestateEnum;
 @Configuration
 public class InitGame {
 
+    @Value("${wizard.cards.value.fool})")
+    int valueFool;
+    @Value("${wizard.cards.value.wizard})")
+    int valueWizard;
+
     @Bean
     Game game() {
-        Game game = new Game();
+        final Game game = new Game();
         game.setPlayers(new ArrayList<>());
         game.setCards(generateCards());
-        game.setNumberOfRounds(10);
+        game.setNumberOfRounds(0);
         game.setCurrentRound(0);
         game.setGamestate(GamestateEnum.INIT);
         return game;
     }
 
     private List<Card> generateCards() {
-        List<Card> cards = new ArrayList<Card>(60);
+        final List<Card> cards = new ArrayList<Card>(60);
 
         for (int i = 1; i <= 13; i++) {
             cards.add(generateCard(CardColor.RED, i));
@@ -35,16 +41,17 @@ public class InitGame {
             cards.add(generateCard(CardColor.GREEN, i));
         }
 
+        
         for (int i = 0; i < 4; i++) {
-            cards.add(generateCard(CardColor.WHITE, 0));
-            cards.add(generateCard(CardColor.WHITE, 14));
+            cards.add(generateCard(CardColor.WHITE, valueFool));
+            cards.add(generateCard(CardColor.WHITE, valueWizard));
         }
 
         return cards;
     }
 
-    private Card generateCard(CardColor color, int value) {
-        Card c = new Card();
+    private Card generateCard(final CardColor color, final int value) {
+        final Card c = new Card();
         c.setCardColor(color);
         c.setValue(value);
         return c;
