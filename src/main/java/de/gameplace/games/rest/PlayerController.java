@@ -25,7 +25,7 @@ public class PlayerController {
     private GamestateInitService gameInitService;
 
     @GetMapping("/player")
-    public PlayerOut getPlayer(@RequestParam(value="name", defaultValue="") String name) throws GameException {
+    public PlayerOut getPlayer(@RequestParam(value="player", defaultValue="") String name) throws GameException {
         return playerService.getPlayerOut(name);
     }
 
