@@ -1,12 +1,14 @@
 package de.gameplace.games.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import de.gameplace.games.exceptions.GameException;
 import de.gameplace.games.exceptions.IllegalPlayActionException;
 import de.gameplace.games.model.Game;
 import de.gameplace.games.model.Player;
+import de.gameplace.games.tools.ListHelper;
 
 @Service
 public class GamestateBetService {
@@ -20,9 +22,12 @@ public class GamestateBetService {
     @Autowired
     GamePlayService gamePlayService;
 
+    @Value("${wizard.rules.allowEqualBets}")
+    boolean allowEqualBets;
+
     public void playBet(Player player, String betString) throws GameException {
 
-        gameService.checkPlayerIsAllowedToPlay(player);
+        gameService.checkIsPlayersTurn(player);
 
         placeBet(player, betString);
         
@@ -37,12 +42,17 @@ public class GamestateBetService {
         
         int bet = resolveBetString(betString);
 
-        if (gameService.isCurrentActionPlayerLast() &&
-            game.getCurrentRound() == getTotalBets() + bet) {   // number of bets is equal to possible tricks
-                throw new IllegalPlayActionException();
-        }
+        checkLastPlayerAllowedToPlaceBet(bet);
         
-        player.getBets().set(player.getBets().size() - 1, bet);
+        ListHelper.changeLastValue(player.getBets(), bet);
+    }
+
+    private void checkLastPlayerAllowedToPlaceBet(int bet) throws IllegalPlayActionException {
+        if (!allowEqualBets &&
+            gameService.isCurrentActionPlayerLast() &&
+            game.getCurrentRound() == getTotalBets() + bet) {
+            throw new IllegalPlayActionException();
+    }
     }
 
     private int resolveBetString(String betString) throws GameException {
@@ -58,7 +68,7 @@ public class GamestateBetService {
     }
 
     private int getTotalBets() {
-        return game.getPlayers().stream().mapToInt(p -> p.getBets().get(game.getCurrentRound() - 1)).sum();
+        return game.getPlayers().stream().mapToInt(p -> ListHelper.getLastValue(p.getBets())).sum();
     }
 
 }
