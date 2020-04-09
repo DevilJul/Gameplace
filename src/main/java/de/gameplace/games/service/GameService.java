@@ -37,7 +37,7 @@ public class GameService {
         return currentIndex;
     }
 
-    public void checkPlayerIsAllowedToPlay(Player player) throws IllegalPlayActionException{
+    public void checkIsPlayersTurn(Player player) throws IllegalPlayActionException{
         if (!game.getPlayers().get(game.getGameRound().getCurrentActionPlayerIndex()).equals(player)) {
             throw new IllegalPlayActionException();
         }
