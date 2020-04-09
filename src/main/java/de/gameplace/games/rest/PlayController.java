@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.gameplace.games.exceptions.GameException;
+import de.gameplace.games.model.Player;
 import de.gameplace.games.service.GamePlayService;
 
 @RestController
@@ -15,23 +16,24 @@ public class PlayController {
     private GamePlayService gamePlayService;
 
     @GetMapping("/playCard")
-    public void playCard(@RequestParam(value="player", defaultValue = "") String playerName,
-                         @RequestParam(value="card", defaultValue = "") String cardString)
+    public Player playCard(@RequestParam(value="player", defaultValue = "") String playerName,
+                         @RequestParam(value="cardColor", defaultValue = "") String cardColorString,
+                         @RequestParam(value="cardValue", defaultValue = "") String cardValueString)
                          throws GameException {
-        gamePlayService.playCard(playerName, cardString);
+        return gamePlayService.playCard(playerName, cardColorString, cardValueString);
     }
 
     @GetMapping("/playBet")
-    public void playBet(@RequestParam(value="player", defaultValue = "") String playerName,
+    public Player playBet(@RequestParam(value="player", defaultValue = "") String playerName,
                          @RequestParam(value="bet", defaultValue = "") String bet)
                          throws GameException {
-        gamePlayService.playBet(playerName, bet);
+        return gamePlayService.playBet(playerName, bet);
     }
 
     @GetMapping("/playOkay")
-    public void playOkay(@RequestParam(value="player", defaultValue = "") String playerName)
+    public Player playOkay(@RequestParam(value="player", defaultValue = "") String playerName)
                          throws GameException {
-        gamePlayService.playOkay(playerName);
+        return gamePlayService.playOkay(playerName);
     }
 
 }
