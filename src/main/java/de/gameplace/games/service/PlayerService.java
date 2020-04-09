@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import de.gameplace.games.configuration.InitPlayer;
 import de.gameplace.games.exceptions.GameException;
 import de.gameplace.games.exceptions.PlayerNameException;
 import de.gameplace.games.model.Game;
 import de.gameplace.games.model.Player;
 import de.gameplace.games.model.PlayerOut;
+import de.gameplace.games.tools.PlayerHelper;
 
 @Service
 public class PlayerService {
@@ -31,11 +31,11 @@ public class PlayerService {
     }
 
     public PlayerOut getPlayerOut(final String name) throws GameException {
-        return InitPlayer.playerOut(getPlayerByName(name));
+        return PlayerHelper.getPlayerOut(getPlayerByName(name));
     }
 
     public List<PlayerOut> getPlayersOut() throws GameException {
-        return game.getPlayers().stream().map(p -> InitPlayer.playerOut(p)).collect(Collectors.toList());
+        return game.getPlayers().stream().map(p -> PlayerHelper.getPlayerOut(p)).collect(Collectors.toList());
     }
 
     public PlayerOut addPlayer(final PlayerOut playerFromUser) throws GameException {
