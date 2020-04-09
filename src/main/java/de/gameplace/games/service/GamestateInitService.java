@@ -1,9 +1,9 @@
 package de.gameplace.games.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import de.gameplace.games.configuration.InitPlayer;
 import de.gameplace.games.exceptions.GameException;
 import de.gameplace.games.exceptions.IllegalGamestateException;
 import de.gameplace.games.exceptions.NoNewPlayerAllowedException;
@@ -11,6 +11,8 @@ import de.gameplace.games.model.Game;
 import de.gameplace.games.model.Game.GamestateEnum;
 import de.gameplace.games.model.Player;
 import de.gameplace.games.model.PlayerOut;
+import de.gameplace.games.tools.ListHelper;
+import de.gameplace.games.tools.PlayerHelper;
 
 @Service
 public class GamestateInitService {
@@ -27,8 +29,8 @@ public class GamestateInitService {
     @Autowired
     GamePlayService gamePlayService;
 
-    //@Value("$(wizard.maxPlayers)") TODO
-    int maxPlayers = 6;
+    @Value("${wizard.maxPlayers}")
+    int maxPlayers;
 
     public PlayerOut addPlayer(final String name) throws GameException {
 
@@ -42,10 +44,9 @@ public class GamestateInitService {
 
         playerService.checkIfPlayerExists(name);
 
-        Player newPlayer = InitPlayer.player(name);
-        game.getPlayers().add(newPlayer);
+        game.getPlayers().add(PlayerHelper.getPlayer(name));
 
-        return InitPlayer.playerOut(newPlayer);
+        return PlayerHelper.getPlayerOut(ListHelper.getLastValue(game.getPlayers()));
     }
 
     public void setPlayerOkay(Player player) {
