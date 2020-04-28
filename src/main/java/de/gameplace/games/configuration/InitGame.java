@@ -3,7 +3,6 @@ package de.gameplace.games.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,13 +14,15 @@ import de.gameplace.games.model.Game.GamestateEnum;
 @Configuration
 public class InitGame {
 
-    @Value("${wizard.cards.value.fool})")
-    int valueFool;
-    @Value("${wizard.cards.value.wizard})")
-    int valueWizard;
+    // TODO
+    //@Value("${wizard.cards.value.fool})")
+    int valueFool = 0;
+    //@Value("${wizard.cards.value.wizard})")
+    int valueWizard = 14;
 
     @Bean
     Game game() {
+        System.out.println("Game is initialized");
         final Game game = new Game();
         game.setPlayers(new ArrayList<>());
         game.setCards(generateCards());
