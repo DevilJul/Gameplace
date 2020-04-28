@@ -7,8 +7,13 @@ import de.gameplace.games.model.PlayerOut;
 
 public class PlayerHelper {
 
-    public static Player getPlayer(String name) {
+    public static Player getPlayer(String id) {
+        return getPlayer(id, id);
+    }
+
+    public static Player getPlayer(String id, String name) {
         Player player = new Player();
+        player.setId(id);
         player.setName(name);
         player.setBets(new ArrayList<>());
         player.setTricks(new ArrayList<>());

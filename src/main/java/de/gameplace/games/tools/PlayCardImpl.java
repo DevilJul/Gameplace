@@ -24,15 +24,19 @@ public class PlayCardImpl {
     }
 
     public void playCard(String cardColorString, String cardValueString) throws GameException {
-        resolveCardStrings(cardColorString, cardValueString);
+        playCard(CardHelper.generateCard(cardColorString, cardValueString));
+    }
+
+    public void playCard(Card card) throws GameException {
+        this.card =card;
         
         checkCardIsOfPlayer();
         checkPlayerCanPlayCard();
 
-        moveCard();
+        removeCard();
     }
 
-    private void moveCard() {
+    private void removeCard() {
         gameRound.getPlayedCards().add(card);
         player.getCurrentCards().remove(card);
     }
@@ -84,34 +88,5 @@ public class PlayCardImpl {
             throw new IllegalCardValueException();
         }
     }
-
-    private void resolveCardStrings(String cardColorString, String cardValueString) throws IllegalCardValueException {
-        card = new Card();
-        
-        if (cardColorString.equalsIgnoreCase(CardColor.BLUE.toString())) {
-            card.setCardColor(CardColor.BLUE);
-        } else if (cardColorString.equalsIgnoreCase(CardColor.RED.toString())) {
-            card.setCardColor(CardColor.RED);
-        } else if (cardColorString.equalsIgnoreCase(CardColor.GREEN.toString())) {
-            card.setCardColor(CardColor.GREEN);
-        } else if (cardColorString.equalsIgnoreCase(CardColor.YELLOW.toString())) {
-            card.setCardColor(CardColor.YELLOW);
-        } else if (cardColorString.equalsIgnoreCase(CardColor.WHITE.toString())) {
-            card.setCardColor(CardColor.WHITE);
-        } else  {
-            throw new IllegalCardValueException();
-        }
-
-        try {
-            int cardValue = Integer.parseInt(cardValueString);
-            if (cardValue < 0 ||cardValue > 14) {
-                throw new IllegalCardValueException();
-            }
-            card.setValue(cardValue);
-        } catch (NumberFormatException e) {
-            throw new IllegalCardValueException();
-        }
-    }
-    
 
 }
