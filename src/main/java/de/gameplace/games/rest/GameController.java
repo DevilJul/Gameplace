@@ -19,40 +19,40 @@ import de.gameplace.games.tools.CardHelper;
 public class GameController {
 
     @Autowired
-    private GameManagerService gameManager;
+    private GameManagerService gameManagerService;
 
     @GetMapping("/initGame")
     public Game initGame(@RequestParam(value="gameId", defaultValue="") String gameId,
                          @RequestParam(value="gameName", defaultValue = "") String gameName,
                          @RequestParam(value="player", defaultValue = "") String playerId)
                          throws GameException {
-        return gameManager.initNewGame(gameId, gameName, playerId);
+        return gameManagerService.initNewGame(gameId, gameName, playerId);
     }
 
     @GetMapping("/initWizardGame")
     public Game initWizardGame(@RequestParam(value="gameId", defaultValue="") String gameId,
                          @RequestParam(value="player", defaultValue = "") String playerId)
                          throws GameException {
-        return gameManager.initNewGame(gameId, "wizard", playerId); // TODO
+        return gameManagerService.initNewGame(gameId, "wizard", playerId); // TODO
     }
 
     @GetMapping("/joinGame")
     public void playerJoin(@RequestParam(value="gameId", defaultValue="") String gameId,
                                 @RequestParam(value="player", defaultValue="") String player) throws GameException {
-        gameManager.joinGame(gameId, player);
+        gameManagerService.joinGame(gameId, player);
     }
 
     @GetMapping("/startGame")
     public void startGame(@RequestParam(value="gameId", defaultValue="") String gameId,
                           @RequestParam(value="player", defaultValue="") String player) throws GameException {
-        gameManager.startGame(gameId, player);
+        gameManagerService.startGame(gameId, player);
     }
 
     @GetMapping("/playAction")
     public void playAction(@RequestParam(value="gameId", defaultValue="") String gameId,
                           @RequestParam(value="player", defaultValue="") String player,
                           @RequestParam(value="action", defaultValue="") String actionString) throws GameException {
-        gameManager.playAction(gameId, player, convertAction(actionString));
+        gameManagerService.playAction(gameId, player, convertAction(actionString));
     }
 
     private GameAction convertAction(String actionString) throws GameException {
