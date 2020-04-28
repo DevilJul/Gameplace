@@ -19,13 +19,13 @@ public class PlayerManager {
         this.game = game;
     }
 
-    public Player addPlayer(String playerId) throws GameException {
+    public Player addPlayer(String playerId, String playerName) throws GameException {
         if (game.getPlayers().size() >= game.getMaxPlayers()) {
             throw new NoNewPlayerAllowedException();
         }
 
         checkIfPlayerExists(playerId);
-        game.getPlayers().add(PlayerHelper.getPlayer(playerId));
+        game.getPlayers().add(PlayerHelper.getPlayer(playerId, playerName));
 
         return getPlayerById(playerId);
     }

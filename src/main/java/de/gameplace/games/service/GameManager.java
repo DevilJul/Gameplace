@@ -25,9 +25,13 @@ public abstract class GameManager {
     }
 
     public void addPlayer(String playerId) throws GameException {
+        addPlayer(playerId, playerId);
+    }
+
+    public void addPlayer(String playerId, String playerName) throws GameException {
 
         checkCorrectGamestate(GamestateEnum.INIT);
-        playerManager.addPlayer(playerId);
+        playerManager.addPlayer(playerId, playerName);
     }
 
     public void startGame(String playerId) throws GameException {
