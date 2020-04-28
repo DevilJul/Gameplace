@@ -7,7 +7,14 @@ import lombok.Data;
 @Data
 public class Game {
 
+    String gameId;
+
+    Player manager;
     List<Player> players;
+
+    int minPlayers;
+    int maxPlayers;
+
     List<Card> cards;
     int numberOfRounds;
     int currentRound;
